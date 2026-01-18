@@ -34,7 +34,7 @@ async function get(endpoint, params = {}, requestId = "unknown") {
 
 function throwEvent(type, data) {
   const event = new CustomEvent(type, {details: data});
-  window.dispatchEvent(event);
+  dispatchEvent(event);
 }
 
 export {get};
