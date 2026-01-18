@@ -1,5 +1,5 @@
 function baseUrl(src) {
-  return `/${src}`;
+  return `${src}`;
 }
 
 function image(src) {

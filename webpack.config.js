@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 const pagesDir = path.resolve(__dirname, "src/pages");
 const pages = fs.readdirSync(pagesDir).filter(file => {
@@ -67,6 +68,11 @@ module.exports = env => ({
   },
   plugins: [
     ...htmlPluginInstances,
-    new MiniCssExtractPlugin()
+    new MiniCssExtractPlugin(),
+    new CopyWebpackPlugin({
+      patterns: [
+        {from: path.resolve(__dirname, "public"), to: path.resolve(__dirname, "build")}
+      ]
+    })
   ]
 });
