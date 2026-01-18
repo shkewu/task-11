@@ -7,6 +7,8 @@ import Shared from "../../shared";
 
 const {lib: {image}} = Shared;
 
+
+
 const modalProviderDOM = ModalProvider();
 modalProvider.init(modalProviderDOM, {playerModal: PlayerModal});
 modalProvider.addModal(
