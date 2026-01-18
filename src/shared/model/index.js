@@ -1,0 +1,1 @@
+export {dataManager} from "./src/dataManager/dataManager";
