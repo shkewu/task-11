@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "private": false,
   "scripts": {
-    "dev": "webpack serve"
+    "dev": "webpack serve",
+    "build:prod": "webpack --env MODE=production",
+    "build:dev": "webpack --env MODE=development"
   },
   "keywords": [],
   "author": "",
@@ -12,6 +14,7 @@
   "devDependencies": {
     "css-loader": "^7.1.2",
     "html-webpack-plugin": "^5.6.6",
+    "mini-css-extract-plugin": "^2.10.0",
     "sass": "^1.97.2",
     "sass-embedded": "^1.97.2",
     "sass-loader": "^16.0.6",

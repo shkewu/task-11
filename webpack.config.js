@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const pagesDir = path.resolve(__dirname, "src/pages");
 const pages = fs.readdirSync(pagesDir).filter(file => {
@@ -30,9 +31,14 @@ const {
   return acc;
 }, {entry: {}, historyApiFallback: {rewrites: []}, htmlPluginInstances: []});
 
-module.exports = {
-  mode: process.env.mode ?? "development",
+module.exports = env => ({
+  mode: env.MODE ?? "development",
   entry,
+  output: {
+    path: path.resolve(__dirname, "build"),
+    filename: "[name].[contenthash].js",
+    clean: true
+  },
   optimization: {
     splitChunks: {
       chunks: "all"
@@ -52,14 +58,15 @@ module.exports = {
       {
         test: /\.s[ac]ss$/i,
         use: [
-          "style-loader",
+          MiniCssExtractPlugin.loader,
           "css-loader",
-          "sass-loader",
-        ],
-      },
+          "sass-loader"
+        ]
+      }
     ]
   },
   plugins: [
-    ...htmlPluginInstances
+    ...htmlPluginInstances,
+    new MiniCssExtractPlugin()
   ]
-};
+});
