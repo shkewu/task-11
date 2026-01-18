@@ -1,0 +1,9 @@
+.player-modal {
+  background-color: green;
+
+  &__modal-background {
+    background: gray;
+    width: 20px;
+    height: 20px;
+  }
+}

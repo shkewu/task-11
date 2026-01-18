@@ -1,5 +1,5 @@
 import Shared from "../../../../shared";
-import "./ModalProvider.css";
+import "./ModalProvider.scss";
 
 const {lib: {createDOMElementFromStr}} = Shared;
 

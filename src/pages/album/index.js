@@ -1,2 +1,2 @@
-import "../../app/styles/zeroing.css";
-import "./index.css";
+import "../../app/styles/zeroing.scss";
+import "./index.scss";
