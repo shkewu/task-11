@@ -1,7 +1,7 @@
 import {API_URL} from "../../../constants";
 import {REQUEST_EVENTS} from "../constants";
 
-async function get(endpoint, params = {}, requestId = "unknown") {
+async function get(endpoint, {params = {}, requestId = "unknown"} = {}) {
   try {
     throwEvent(REQUEST_EVENTS.pending, {
       requestId, // Добавил requestId в событие, чтобы при отлове можно было понять, что за request начался
