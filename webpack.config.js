@@ -3,6 +3,9 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+const webpack = require("webpack");
+const dotenv = require("dotenv");
+dotenv.config();
 
 const pagesDir = path.resolve(__dirname, "src/pages");
 const pages = fs.readdirSync(pagesDir).filter(file => {
@@ -73,6 +76,9 @@ module.exports = env => ({
       patterns: [
         {from: path.resolve(__dirname, "public"), to: path.resolve(__dirname, "build")}
       ]
+    }),
+    new webpack.EnvironmentPlugin({
+      MODE: process.env.MODE ?? "development"
     })
   ]
 });
