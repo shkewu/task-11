@@ -1,4 +1,4 @@
-import Shared from "../../../shared";
+import Shared from "@shared";
 
 const {lib: {image}} = Shared;
 

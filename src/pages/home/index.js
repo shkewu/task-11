@@ -3,7 +3,7 @@ import "./index.scss";
 import {modalProvider, ModalProvider} from "../../app";
 import {Modal as PlayerModal} from "../../features/playersModal";
 
-import Shared from "../../shared";
+import Shared from "@shared";
 
 const {lib: {image}, api: {get}} = Shared;
 

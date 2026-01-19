@@ -1,5 +1,5 @@
 import "./Modal.scss";
-import Shared from "../../../../shared";
+import Shared from "@shared";
 import {content} from "../../constants/content";
 
 const {button} = content;

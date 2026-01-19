@@ -80,5 +80,11 @@ module.exports = env => ({
     new webpack.EnvironmentPlugin({
       MODE: process.env.MODE ?? "development"
     })
-  ]
+  ],
+  resolve: {
+    alias: {
+      "@*": path.resolve(__dirname, "src/*"),
+      "@shared": path.resolve(__dirname, "src/shared")
+    }
+  }
 });
