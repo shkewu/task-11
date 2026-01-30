@@ -28,17 +28,17 @@ function Button({events = [], disabled = false, timeout = 300, children = null, 
     });
   });
 
-//     if(typeof(children) = text) {
-//         const child = document.createElement("div"); 
-//         child.textContent = children;
-//     } else if(typeof(children) = string) {
-//         const child = document.createElement("img"); 
-//         child.src = chisldren; 
-//     } else if(typeof(children) = DOMel) {
+    if(typeof children ===  "string") {
+      if (children.match(/\.(jpg|jpeg|png|svg)$/i)) {
+        const child = document.createElement("img");
+        child.src = children;
+      } else {
+        const child = document.createElement("div");
+        child.textContent = children;
+      }
 
-//     }
 
-  if (disabled) {
+      if (disabled) {
     button.disabled = true;
   }
 

@@ -1,14 +1,14 @@
 import {API_URL} from "../../../constants";
 import {REQUEST_EVENTS} from "../constants";
 
-async function get(endpoint, {params = {}, requestId = "unknown"} = {}) {
+async function get(endpointUrl, {params = {}, requestId = "unknown"} = {}) {
   try {
     throwEvent(REQUEST_EVENTS.pending, {
       requestId, // Добавил requestId в событие, чтобы при отлове можно было понять, что за request начался
-      endpoint
+      endpointUrl
     });
 
-    const response = await fetch(`${API_URL}/${endpoint}`, params);// Добавил логику по формированию пути baseUrl + endPoint
+    const response = await fetch(`${API_URL}/${endpointUrl}`, params);// Добавил логику по формированию пути baseUrl + endPoint
     if (!response.ok) {
       throw new Error(response.status.toString());
     }
@@ -17,7 +17,7 @@ async function get(endpoint, {params = {}, requestId = "unknown"} = {}) {
 
     throwEvent(REQUEST_EVENTS.fulfilled, {
       requestId, // Добавил requestId в событие, чтобы при отлове можно было понять, что за request закончился успешно
-      endpoint,
+      endpointUrl,
       data
     });
 
@@ -27,12 +27,12 @@ async function get(endpoint, {params = {}, requestId = "unknown"} = {}) {
 
     throwEvent(REQUEST_EVENTS.rejected, {
       requestId, // Добавил requestId в событие, чтобы при отлове можно было понять, что за request закончился ошибочно
-      endpoint,
+      endpointUrl,
       data: err
     });
   } finally {
     // Добавил finally, чтобы можно было ловить событие окончания запроса, каким бы он не был, хоть успешно, хоть нет
-    throwEvent(REQUEST_EVENTS.settled, {requestId, endpoint});
+    throwEvent(REQUEST_EVENTS.settled, {requestId, endpointUrl});
   }
 }
 

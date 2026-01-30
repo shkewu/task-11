@@ -16,7 +16,7 @@ document.addEventListener("fulfilled", (event) => {
     dataManager.updateData(event.detail.data, event.detail.endpointUrl);
 })
 
-let playersData = [];
+let playersData = {};
 
 document.addEventListener("dataManagerUpdated", (event) => {
     playersData = event.detail.data;
@@ -31,13 +31,13 @@ content.playersImages.forEach((src) => {
 
 get('users')
 
-const openModal = (src, {name, discription}) => {
+const openModal = (src, {name, description}) => {
 
     modalProvider.addModal(
         "playerModal",
         {
             name: name,
-            description: discription, // хз какие поля будут в json place holder
+            description: description, // хз какие поля будут в json place holder
             imgSrc: image(src)
         });
 }
