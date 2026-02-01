@@ -22,4 +22,5 @@ function Player(src, onEventFunc) {
     return player;
 }
 
+
 export {Player};
