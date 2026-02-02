@@ -22,10 +22,12 @@ function Button({events = [], disabled = false, timeout = 300, src = null, child
   const controller = new AbortController();
 
   events.forEach(({event, callback, options}) => {
-    button.addEventListener(event, callback, { // нужно еще сделать как-то setTimeout
-      ...options,
-      signal: controller.signal
-    });
+    if(timeout) {
+      button.addEventListener(event, () => setTimeout(() => callback(), timeout), {
+        ...options,
+        signal: controller.signal
+      });
+    }
   });
 
   if (typeof children === "string") {
