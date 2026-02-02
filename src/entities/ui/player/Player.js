@@ -2,25 +2,26 @@ import Shared from "@shared";
 
 const {ui: {Button}} = Shared;
 
-function Player(src, onEventFunc) {
-    const player = Button({
-        events: [
-            {
-                event: "click",
-                callback() {
-                    if(onEventFunc) onEventFunc();
-                },
-                options: {
-                    passive: true,
-                }
-            }
-        ],
-        src: src,
-        className: "player",
-    });
 
-    return player;
+const allParams  = [
+    {
+    events: [{
+        event: "click",
+        callback() {
+            if(onEventFunc) onEventFunc();
+        },
+        options: {
+            passive: true,
+        }
+    }],
+        className: "player-left",
+        src: 'random.png'
+    },
+]
+
+
+function Player(onEventFunc) {
+    return allParams.forEach(param => Button(param))
 }
-
 
 export {Player};
