@@ -14,7 +14,9 @@
 //   // ...
 // ];
 
-function Button({events = [], disabled = false, timeout = 300, src = null, children = null, className = ""}) {
+import {isString} from "lodash";
+
+function Button({events = [], children = null, disabled = false, timeout = 300, className = ""}) {
   const button = document.createElement("button");
   button.classList.add("button");
   button.className = `${className}`;
@@ -22,39 +24,40 @@ function Button({events = [], disabled = false, timeout = 300, src = null, child
   const controller = new AbortController();
 
   events.forEach(({event, callback, options}) => {
-    if(timeout) {
-      button.addEventListener(event, () => setTimeout(() => callback(), timeout), {
-        ...options,
-        signal: controller.signal
-      });
-    }
+    button.addEventListener(event, () => {
+      if (disabled) return
+      disabled = true;
+
+      setTimeout(() => {
+        disabled = false;
+      }, timeout);
+
+      callback();
+    }, {
+      ...options,
+      signal: controller.signal
+    });
   });
 
-  if (typeof children === "string") {
-    const child = document.createElement("div");
-    child.textContent = children;
-    button.appendChild(child);
-  }
-
-  if (!!src) {
-    const child = document.createElement("img");
-    child.src = src;
-    child.alt = "image";
-    button.appendChild(child);
-  }
-
-  if (disabled) {
-    button.disabled = true;
-  }
-
-  return {
-    button,
-    unmount() {
-      controller.abort();
+  if (!!children) {
+    if (isString(children)) {
+      button.innerHTML = children;
+    } else {
+      button.append(children);
     }
-  };
-}
 
-export {Button};
+    if (disabled) {
+      button.disabled = true;
+    }
+
+    return {
+      button,
+      unmount() {
+        controller.abort();
+      }
+    };
+  }
+}
+export {Button}
 
 
