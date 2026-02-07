@@ -14,7 +14,7 @@
 //   // ...
 // ];
 
-import {isString} from "lodash";
+import {isString, isFinite} from "lodash";
 
 function Button({events = [], children = null, disabled = false, className}) {
   const button = document.createElement("button");
@@ -55,11 +55,11 @@ function Button({events = [], children = null, disabled = false, className}) {
   if (!!children) {
     isString(children)
       ? button.innerHTML = children
-      : button.append(children);
+      : button.appendChild(children);
   }
 
   return {
-    button,
+    node: button,
     unmount() {
       button.remove();
 
@@ -72,5 +72,3 @@ function Button({events = [], children = null, disabled = false, className}) {
 }
 
 export {Button};
-
-
