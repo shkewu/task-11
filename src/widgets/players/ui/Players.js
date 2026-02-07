@@ -1,13 +1,12 @@
-import "../../app/styles/zeroing.scss";
-import "./index.scss";
-import {modalProvider, ModalProvider} from "../../app";
-import {Modal as PlayerModal} from "../../features/playersModal";
-import {content} from "../../src/widgets/players/constants/content";
+import {modalProvider, ModalProvider} from "../../../app";
+import {Modal as PlayerModal} from "../../../features/playersModal";
+import {content} from "../constants/content";
+import {Player} from "../../../entities/ui/player/Player.js";
 
 import Shared from "@shared";
 import {dataManager} from "@shared/model";
 
-const {lib: {image}, api: {get}} = Shared;
+const {lib: {image}} = Shared;
 
 const modalProviderDOM = ModalProvider();
 modalProvider.init(modalProviderDOM, {playerModal: PlayerModal});
@@ -22,17 +21,7 @@ document.addEventListener("dataManagerUpdated", (event) => {
     playersData = event.detail.data;
 }) // на этом этапе мы можем использовать данные из дм, потому что слушаем его обновление
 
-content.playersImages.forEach((src) => {
-    const player = createPlayer(src);
-    player.addEventListener("click", () => {
-        openModal(src, playersData)
-    })
-});
-
-get('users')
-
 const openModal = (src, {name, description}) => {
-
     modalProvider.addModal(
         "playerModal",
         {
@@ -41,3 +30,15 @@ const openModal = (src, {name, description}) => {
             imgSrc: image(src)
         });
 }
+
+function Players() {
+    content.playersImages.forEach((src) => {
+        return Player(src, () => openModal(src, playersData));
+    });
+}
+
+export {Players}
+
+
+
+
