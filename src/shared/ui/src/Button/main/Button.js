@@ -16,21 +16,34 @@
 
 import {isString} from "lodash";
 
-function Button({events = [], children = null, disabled = false, timeout = 300, className = ""}) {
+function Button({events = [], children = null, disabled = false, className}) {
   const button = document.createElement("button");
+
   button.classList.add("button");
-  button.className = `${className}`;
+  isString(className) && button.classList.add(className);
+
+  disabled && (button.disabled = true);
+
 
   const controller = new AbortController();
 
-  events.forEach(({event, callback, options}) => {
-    button.addEventListener(event, () => {
-      if (disabled) return
-      disabled = true;
+  const clearFunctions = [];
 
-      setTimeout(() => {
-        disabled = false;
-      }, timeout);
+  events.forEach(({event, timeout, callback, options = {}}) => {
+    let isDisabled;
+
+    button.addEventListener(event, () => {
+      if (disabled || isDisabled) return;
+
+      if (isFinite(timeout)) {
+        isDisabled = true;
+
+        const timeoutId = setTimeout(() => {
+          isDisabled = false;
+        }, timeout);
+
+        clearFunctions.push(() => clearTimeout(timeoutId));
+      }
 
       callback();
     }, {
@@ -40,24 +53,24 @@ function Button({events = [], children = null, disabled = false, timeout = 300, 
   });
 
   if (!!children) {
-    if (isString(children)) {
-      button.innerHTML = children;
-    } else {
-      button.append(children);
-    }
-
-    if (disabled) {
-      button.disabled = true;
-    }
-
-    return {
-      button,
-      unmount() {
-        controller.abort();
-      }
-    };
+    isString(children)
+      ? button.innerHTML = children
+      : button.append(children);
   }
+
+  return {
+    button,
+    unmount() {
+      button.remove();
+
+      controller.abort();
+
+      clearFunctions.forEach(clear => clear());
+      clearFunctions.length = 0;
+    }
+  };
 }
-export {Button}
+
+export {Button};
 
 
