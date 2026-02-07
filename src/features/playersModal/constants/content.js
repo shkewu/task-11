@@ -1,7 +1,7 @@
 const content = {
   button: {
-    text: "На главную"
-  }
+    text: "На главную",
+  },
 };
 
 export {content};

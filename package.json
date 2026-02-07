@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "webpack serve",
     "build:prod": "webpack --env MODE=production",
-    "build:dev": "webpack --env MODE=development"
+    "build:dev": "webpack --env MODE=development",
+    "format": "biome format --write"
   },
   "keywords": [],
   "author": "",
@@ -26,6 +27,7 @@
     "webpack-dev-server": "^5.2.3"
   },
   "dependencies": {
+    "@biomejs/biome": "2.3.11",
     "lodash": "^4.17.21"
   }
 }

@@ -1,15 +1,12 @@
+import {DATA_MANAGER_EVENTS} from "../../constants/events";
+
 class DataManager {
   store = {};
 
-  updateData(data, endpointUrl) {
-    this.store[endpointUrl] = data;
-    throwEvent('dataManagerUpdated', data, endpointUrl);
+  throwEvent() {
+    const event = new CustomEvent(DATA_MANAGER_EVENTS.updated, {detail: {store: this.store}});
+    window.dispatchEvent(event);
   }
-}
-
-const throwEvent = (type, data, endpointUrl) => {
-  const event = new CustomEvent(type, {detail: {data, endpointUrl }});
-  dispatchEvent(event);
 }
 
 const dataManager = new DataManager();

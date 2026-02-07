@@ -9,7 +9,7 @@ const Shared = {
   model,
   api,
   ui,
-  constants
+  constants,
 };
 
 export default Shared;

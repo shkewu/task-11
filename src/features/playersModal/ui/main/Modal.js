@@ -3,7 +3,9 @@ import Shared from "@shared";
 import {content} from "../../constants/content";
 
 const {button} = content;
-const {lib: {createDOMElementFromStr}} = Shared;
+const {
+  lib: {createDOMElementFromStr},
+} = Shared;
 
 function Modal({imgSrc, description, name}) {
   return createDOMElementFromStr(
@@ -17,11 +19,8 @@ function Modal({imgSrc, description, name}) {
                 <p>${button.text}</p>
             </button>
         </div>
-        `
+        `,
   );
 }
 
 export {Modal};
-
-
-

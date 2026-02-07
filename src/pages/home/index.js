@@ -1,27 +1,19 @@
 import "../../app/styles/zeroing.scss";
 import "./index.scss";
-import {modalProvider, ModalProvider} from "../../app";
-import {Modal as PlayerModal} from "../../features/playersModal";
-
-import Shared from "@shared";
+import {ModalProvider, modalProvider} from "../../app";
+import {PlayerModal} from "../../features/playersModal";
 import {Players} from "../../widgets/players/ui/Players";
 
-const {lib: {image}, api: {get}} = Shared;
+import Shared from "@shared";
 
-get("users").then(user => {
-  console.log(user);
+const {
+  api: {get},
+} = Shared;
+
+const {node: $modalContainer} = ModalProvider();
+modalProvider.init($modalContainer, {
+  playerModal: PlayerModal,
 });
 
-Players()
-
-// const modalProviderDOM = ModalProvider();
-// modalProvider.init(modalProviderDOM, {playerModal: PlayerModal});
-// modalProvider.addModal(
-//   "playerModal",
-//   {
-//     name: "dwqwqd",
-//     description: "dwqqwd",
-//     imgSrc: image("players/left.png")
-//   }
-// );
-
+const {node: players, unmount} = Players();
+document.body.appendChild(players);

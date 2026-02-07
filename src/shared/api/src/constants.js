@@ -1,8 +1,8 @@
 const REQUEST_EVENTS = {
-  pending: "pending",
-  fulfilled: "fulfilled",
-  rejected: "rejected",
-  settled: "settled"
+  pending: "request-pending",
+  fulfilled: "request-fulfilled",
+  rejected: "request-rejected",
+  settled: "request-settled",
 };
 
 export {REQUEST_EVENTS};

@@ -14,7 +14,7 @@
 //   // ...
 // ];
 
-import {isString, isFinite} from "lodash";
+import {isString, isFinite, isArray} from "lodash";
 
 function Button({events = [], children = null, disabled = false, className}) {
   const button = document.createElement("button");
@@ -24,7 +24,6 @@ function Button({events = [], children = null, disabled = false, className}) {
 
   disabled && (button.disabled = true);
 
-
   const controller = new AbortController();
 
   const clearFunctions = [];
@@ -32,30 +31,40 @@ function Button({events = [], children = null, disabled = false, className}) {
   events.forEach(({event, timeout, callback, options = {}}) => {
     let isDisabled;
 
-    button.addEventListener(event, () => {
-      if (disabled || isDisabled) return;
+    button.addEventListener(
+      event,
+      () => {
+        if (disabled || isDisabled) return;
 
-      if (isFinite(timeout)) {
-        isDisabled = true;
+        if (isFinite(timeout)) {
+          isDisabled = true;
 
-        const timeoutId = setTimeout(() => {
-          isDisabled = false;
-        }, timeout);
+          const timeoutId = setTimeout(() => {
+            isDisabled = false;
+          }, timeout);
 
-        clearFunctions.push(() => clearTimeout(timeoutId));
-      }
+          clearFunctions.push(() => clearTimeout(timeoutId));
+        }
 
-      callback();
-    }, {
-      ...options,
-      signal: controller.signal
-    });
+        callback();
+      },
+      {
+        ...options,
+        signal: controller.signal,
+      },
+    );
   });
 
   if (!!children) {
-    isString(children)
-      ? button.innerHTML = children
-      : button.appendChild(children);
+    if (isString(children)) {
+      button.innerHTML = children;
+    } else if (isArray(children)) {
+      children.forEach((child) => {
+        button.appendChild(child);
+      });
+    } else {
+      button.appendChild(children);
+    }
   }
 
   return {
@@ -65,9 +74,9 @@ function Button({events = [], children = null, disabled = false, className}) {
 
       controller.abort();
 
-      clearFunctions.forEach(clear => clear());
+      clearFunctions.forEach((clear) => clear());
       clearFunctions.length = 0;
-    }
+    },
   };
 }
 

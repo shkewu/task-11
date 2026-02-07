@@ -1,0 +1,28 @@
+{
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "lineWidth": 120,
+    "formatWithErrors": false,
+    "lineEnding": "lf",
+    "bracketSameLine": true,
+    "bracketSpacing": false,
+    "expand": "auto"
+  },
+  "javascript": {
+    "formatter": {
+      "quoteProperties": "preserve",
+      "trailingCommas": "all",
+      "semicolons": "always"
+    }
+  },
+  "linter": {
+    "enabled": false
+  },
+  "assist": {
+    "enabled": true
+  },
+  "files": {
+    "includes": ["src/**", "pages/**"]
+  }
+}

@@ -1,7 +1,6 @@
 function Card(props) {
   const {img1, img2, text, title, number, score} = props;
 
-
   const $card = document.createElement("div");
   $card.classList.add("card");
 

@@ -1,1 +1,1 @@
-export {Modal} from "./ui/main/Modal";
+export {Modal as PlayerModal} from "./ui/main/Modal";

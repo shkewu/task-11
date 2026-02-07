@@ -5,10 +5,10 @@ async function get(endpointUrl, {params = {}, requestId = "unknown"} = {}) {
   try {
     throwEvent(REQUEST_EVENTS.pending, {
       requestId, // Добавил requestId в событие, чтобы при отлове можно было понять, что за request начался
-      endpointUrl
+      endpointUrl,
     });
 
-    const response = await fetch(`${API_URL}/${endpointUrl}`, params);// Добавил логику по формированию пути baseUrl + endPoint
+    const response = await fetch(`${API_URL}/${endpointUrl}`, params); // Добавил логику по формированию пути baseUrl + endPoint
     if (!response.ok) {
       throw new Error(response.status.toString());
     }
@@ -18,7 +18,7 @@ async function get(endpointUrl, {params = {}, requestId = "unknown"} = {}) {
     throwEvent(REQUEST_EVENTS.fulfilled, {
       requestId, // Добавил requestId в событие, чтобы при отлове можно было понять, что за request закончился успешно
       endpointUrl,
-      data
+      data,
     });
 
     return data;
@@ -28,7 +28,7 @@ async function get(endpointUrl, {params = {}, requestId = "unknown"} = {}) {
     throwEvent(REQUEST_EVENTS.rejected, {
       requestId, // Добавил requestId в событие, чтобы при отлове можно было понять, что за request закончился ошибочно
       endpointUrl,
-      data: err
+      data: err,
     });
   } finally {
     // Добавил finally, чтобы можно было ловить событие окончания запроса, каким бы он не был, хоть успешно, хоть нет
@@ -37,8 +37,8 @@ async function get(endpointUrl, {params = {}, requestId = "unknown"} = {}) {
 }
 
 function throwEvent(type, data) {
-  const event = new CustomEvent(type, {details: data});
-  dispatchEvent(event);
+  const event = new CustomEvent(type, {detail: data});
+  window.dispatchEvent(event);
 }
 
 export {get};
