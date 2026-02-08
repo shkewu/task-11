@@ -11,10 +11,10 @@ const {
   lib: {image},
 } = Shared;
 
-const openModal = (src, {name, description}) => {
+const openModal = (src, {name, username}) => {
   modalProvider.addModal("playerModal", {
     name: name,
-    description: description, // хз какие поля будут в json place holder
+    description: username, // хз какие поля будут в json place holder
     imgSrc: image(src),
   });
 };
@@ -32,15 +32,16 @@ function Players() {
   const handleRequest = ({detail}) => {
     if (detail?.endpointUrl !== "users") return;
 
-    const {data} = detail;
+    const {data} = detail; // потому что get возвращает data в detail
 
     dataManager.store.players = data;
     dataManager.throwEvent();
   };
+
   window.addEventListener(REQUEST_EVENTS.fulfilled, handleRequest);
   clearFunctions.push(() => {
     window.removeEventListener(REQUEST_EVENTS.fulfilled, handleRequest);
-  });
+  }); // мы не вызываем очистку слушателя, а объявляем и добавляем в массив
 
   const onDataManagerUpdated = ({detail: {store}}) => {
     if (!store.players) return;
@@ -50,10 +51,12 @@ function Players() {
     });
     playersList.length = 0;
 
-    store.players.forEach(({id}) => {
+    store.players.forEach(({id, name, username}) => {
       const playersData = content.playersData[id];
       if (!playersData) return;
-      playersList.push(Player(playersData.src));
+
+      const handleClick = () => openModal(playersData.src, {name, username});
+      playersList.push(Player(playersData.src, handleClick));
     });
 
     playersList.forEach(({node}) => {
