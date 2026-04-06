@@ -4,9 +4,18 @@ const {
   ui: {Button},
 } = Shared;
 
-function Player(src, onEventFunc) {
-  const img = document.createElement("img");
-  img.src = src;
+function Player(imagesData = [], onEventFunc) {
+  const images = imagesData.map(({src, alt, classes = []}) => {
+    if(!!src) {
+      const img = document.createElement("img");
+
+      if(!!classes) classes.forEach(style => img.classList.add(style));
+
+      img.src = src;
+      img.alt = alt;
+      return img;
+    }
+  })
 
   return Button({
     events: [
@@ -18,7 +27,7 @@ function Player(src, onEventFunc) {
       },
     ],
     className: "player",
-    children: img,
+    children: images,
   });
 }
 

@@ -11,11 +11,15 @@ const {
   lib: {image},
 } = Shared;
 
-const openModal = (src, {name, username}) => {
+const openModal = (imagesData = [], {name, username}) => {
+  const images = imagesData.map(({src}) => {
+    return src;
+  })
+
   modalProvider.addModal("playerModal", {
     name: name,
-    description: username, // хз какие поля будут в json place holder
-    imgSrc: image(src),
+    description: username,
+    imgSrc: images[0],
   });
 };
 
@@ -55,8 +59,8 @@ function Players() {
       const playersData = content.playersData[id];
       if (!playersData) return;
 
-      const handleClick = () => openModal(playersData.src, {name, username});
-      playersList.push(Player(playersData.src, handleClick));
+      const handleClick = () => openModal(playersData, {name, username});
+      playersList.push(Player(playersData, handleClick));
     });
 
     playersList.forEach(({node}) => {

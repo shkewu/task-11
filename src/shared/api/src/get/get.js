@@ -9,9 +9,7 @@ async function get(endpointUrl, {params = {}, requestId = "unknown"} = {}) {
     });
 
     const response = await fetch(`${API_URL}/${endpointUrl}`, params); // Добавил логику по формированию пути baseUrl + endPoint
-    if (!response.ok) {
-      throw new Error(response.status.toString());
-    }
+    if (!response.ok) throw new Error(response.status.toString());
 
     const data = await response.json();
 
